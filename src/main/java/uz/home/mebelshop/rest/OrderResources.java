@@ -18,7 +18,7 @@ public class OrderResources {
         return orderService.getAll();
     }
 
-    @GetMapping("by-id/{id}")
+    @GetMapping("{id}")
     public ResponseDto<OrderDto> getById(@PathVariable Integer id){
         return orderService.getById(id);
     }

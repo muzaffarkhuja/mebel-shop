@@ -30,6 +30,10 @@ public class CategoryResources {
         return categoryServiceImpl.getById(id);
     }
 
+    @GetMapping()
+    public ResponseDto<List<CategoryDto>> getByParentId(@RequestParam Integer parentId){
+        return categoryServiceImpl.getByParentId(parentId);
+    }
     @DeleteMapping("delete")
     public ResponseDto<Void> delete(@RequestParam Integer id){
         return categoryServiceImpl.delete(id);

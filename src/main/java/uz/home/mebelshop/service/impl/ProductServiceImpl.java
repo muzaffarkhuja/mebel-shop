@@ -12,6 +12,7 @@ import uz.home.mebelshop.service.ProductService;
 import uz.home.mebelshop.service.mapper.CategoryMapper;
 import uz.home.mebelshop.service.mapper.ProductMapper;
 
+import java.util.Map;
 import java.util.Optional;
 
 import static uz.home.mebelshop.service.validator.AppStatusCodes.*;
@@ -44,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
         }
     }
     @Override
-    public  ResponseDto<Page<ProductDto>> getAllProducts(Integer size, Integer page) {
+    public  ResponseDto<Page<ProductDto>> getAllProducts(Integer size, Integer page, Map<String, String> params) {
         Long count = productRepository.count();
 
         PageRequest pageRequest = PageRequest.of(
@@ -56,7 +57,11 @@ public class ProductServiceImpl implements ProductService {
         );
 
         try {
-            Page<ProductDto> all = productRepository.findAll(pageRequest).map(productMapper::toDto);
+            Page<ProductDto> all = productRepository.getAll(pageRequest,
+                    params.get("name"),
+                    params.get("minPrice"),
+                    params.get("maxPrice"),
+                    params.get("category")).map(productMapper::toDto);
 
             return ResponseDto.<Page<ProductDto>>builder()
                     .success(true)

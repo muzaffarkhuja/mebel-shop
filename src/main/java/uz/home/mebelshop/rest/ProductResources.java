@@ -7,6 +7,8 @@ import uz.home.mebelshop.dto.ProductDto;
 import uz.home.mebelshop.dto.ResponseDto;
 import uz.home.mebelshop.service.impl.ProductServiceImpl;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("product")
 @RequiredArgsConstructor
@@ -21,8 +23,9 @@ public class ProductResources {
 
     @GetMapping()
     public ResponseDto<Page<ProductDto>> getAllProducts(@RequestParam(defaultValue = "10") Integer size,
-                                                              @RequestParam(defaultValue = "0") Integer page){
-        return productServiceImpl.getAllProducts(size, page);
+                                                        @RequestParam(defaultValue = "0") Integer page,
+                                                        @RequestParam Map<String, String> params){
+        return productServiceImpl.getAllProducts(size, page, params);
     }
 
     @GetMapping("{id}")

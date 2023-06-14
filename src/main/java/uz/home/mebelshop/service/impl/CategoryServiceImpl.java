@@ -78,6 +78,21 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
+    public ResponseDto<List<CategoryDto>> getByParentId(Integer id){
+        try{
+            return ResponseDto.<List<CategoryDto>>builder()
+                    .success(true)
+                    .message(OK)
+                    .data(categoryRepository.findAllByParentId(id).stream().map(categoryMapper::toDto).toList())
+                    .build();
+        } catch (Exception e){
+            return ResponseDto.<List<CategoryDto>>builder()
+                    .code(DATABASE_ERROR_CODE)
+                    .message(DATABASE_ERROR + " -> " + e.getMessage())
+                    .build();
+        }
+    }
+
     public ResponseDto<Void> delete(Integer id){
         if(id == null){
             return ResponseDto.<Void>builder()
